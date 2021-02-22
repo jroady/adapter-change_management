@@ -1,6 +1,6 @@
 // Update this constant with your ServiceNow credentials
 const options = {
-  url: 'https://dev106460.service-now.com/',
+  url: 'https://dev106460.service-now.com',
   username: 'admin',
   password: 'Splash41877!'
 };
@@ -161,25 +161,24 @@ function post (serviceNowTable, callback) {
 
 }
 /*
- * This section is used to test your project.
- * We will test both get() and post() functions.
- * If either function returns data, print the returned data to console on STDOUT.
- * If either function returns an error, print the returned data to the console on STDERR.
+ * This section is used to test your project. We will test both get() and post()
+ * functions. If either function returns data, print the returned data to
+ * console on STDOUT. If either function returns an error, print the returned
+ * data to the console on STDERR.
  */
 function main() {
   get('change_request', (data, error) => {
     if (error) {
-      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
-    }
+	      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
+	    }
     console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
   });
   post('change_request', (data, error) => {
     if (error) {
-      console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
-    }
-    console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
-  });
-}
+     console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
+   }
+	    console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
+});
 
 // Call main to run it.
 main();
