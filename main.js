@@ -5,10 +5,8 @@ const options = {
   password: 'Splash41877!'
 };
 
-
 /**
- * Import the Node.js request package.
- * See https://www.npmjs.com/package/request
+ * Import the Node.js request package. See https://www.npmjs.com/package/request
  */
 const request = require('request');
 
@@ -23,29 +21,34 @@ const validResponseRegex = /(2\d\d)/;
 /**
  * This is a [JSDoc comment]{@link http://usejsdoc.org/tags-description.html}.
  * See http://usejsdoc.org/tags-description.html.
- *
+ * 
  * @callback iapCallback
  * @description A [callback function]{@link
- *   https://developer.mozilla.org/en-US/docs/Glossary/Callback_function}
- *   is a function passed into another function as an argument, which is
- *   then invoked inside the outer function to complete some kind of
- *   routine or action.
- *
- * @param {*} responseData - When no errors are caught, return data as a
- *   single argument to callback function.
- * @param {error} [errorMessage] - If an error is caught, return error
- *   message in optional second argument to callback function.
+ *              https://developer.mozilla.org/en-US/docs/Glossary/Callback_function}
+ *              is a function passed into another function as an argument, which
+ *              is then invoked inside the outer function to complete some kind
+ *              of routine or action.
+ * 
+ * @param {*}
+ *            responseData - When no errors are caught, return data as a single
+ *            argument to callback function.
+ * @param {error}
+ *            [errorMessage] - If an error is caught, return error message in
+ *            optional second argument to callback function.
  */
-
 /**
  * @function get
  * @description Call the ServiceNow GET API.
- *
- * @param {string} serviceNowTable - The table target of the ServiceNow table API.
- * @param {iapCallback} callback - Callback a function.
- * @param {*} callback.data - The API's response. Will be an object if sunnyday path.
- *   Will be HTML text if hibernating instance.
- * @param {error} callback.error - The error property of callback.
+ * 
+ * @param {string}
+ *            serviceNowTable - The table target of the ServiceNow table API.
+ * @param {iapCallback}
+ *            callback - Callback a function.
+ * @param {*}
+ *            callback.data - The API's response. Will be an object if sunnyday
+ *            path. Will be HTML text if hibernating instance.
+ * @param {error}
+ *            callback.error - The error property of callback.
  */
 function get(serviceNowTable, callback) {
 
@@ -74,11 +77,12 @@ function get(serviceNowTable, callback) {
   // We are passing an anonymous function, an error-first callback,
   // for the second argument.
   request(requestOptions, (error, response, body) => {
+	  let callbackError = null;
+	  let callbackData  = null;
     /**
-     * Process ServiceNow error, response and body.
-     * Check error and response code to make sure
-     * response is good.
-     */
+	 * Process ServiceNow error, response and body. Check error and response
+	 * code to make sure response is good.
+	 */
     if (error) {
       console.error('Error present.');
       callbackError = error;
@@ -95,32 +99,21 @@ function get(serviceNowTable, callback) {
   });
 
 }
-
-
-// This test function calls your request and logs any errors.
-function main() {
-  // Call function get().
-  // We are passing a static argument for parameter serviceNowTable.
-  // We are passing an anonymous function argument, a data-first callback,
-  // for parameter callback.
-  get('change_request', (data, error) => {
-    if (error) {
-      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
-    }
-    console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
-  });
-}
 /**
  * @function post
  * @description Call the ServiceNow POST API.
- *
- * @param {string} serviceNowTable - The table target of the ServiceNow table API.
- * @param {iapCallback} callback - Callback a function.
- * @param {*} callback.data - The API's response. Will be an object if sunnyday path.
- *   Will be HTML text if hibernating instance.
- * @param {error} callback.error - The error property of callback.
+ * 
+ * @param {string}
+ *            serviceNowTable - The table target of the ServiceNow table API.
+ * @param {iapCallback}
+ *            callback - Callback a function.
+ * @param {*}
+ *            callback.data - The API's response. Will be an object if sunnyday
+ *            path. Will be HTML text if hibernating instance.
+ * @param {error}
+ *            callback.error - The error property of callback.
  */
-function get(serviceNowTable, callback) {
+function post (serviceNowTable, callback) {
 
   // Initialize return arguments for callback
   let callbackData = null;
@@ -139,7 +132,7 @@ function get(serviceNowTable, callback) {
       pass: options.password,
     },
     baseUrl: options.url,
-    uri: `/api/now/table/${serviceNowTable}`,
+    uri: `/api/now/table/${serviceNowTable}
   };
 
   // Send Request to ServiceNow.
@@ -148,10 +141,9 @@ function get(serviceNowTable, callback) {
   // for the second argument.
   request(requestOptions, (error, response, body) => {
     /**
-     * Process ServiceNow error, response and body.
-     * Check error and response code to make sure
-     * response is good.
-     */
+	 * Process ServiceNow error, response and body. Check error and response
+	 * code to make sure response is good.
+	 */
     if (error) {
       console.error('Error present.');
       callbackError = error;
@@ -168,28 +160,25 @@ function get(serviceNowTable, callback) {
   });
 
 }
-
-
 /*
- * This section is used to test your project.
- * We will test both get() and post() functions.
- * If either function returns data, print the returned data to console on STDOUT.
- * If either function returns an error, print the returned data to the console on STDERR.
+ * This section is used to test your project. We will test both get() and post()
+ * functions. If either function returns data, print the returned data to
+ * console on STDOUT. If either function returns an error, print the returned
+ * data to the console on STDERR.
  */
 function main() {
   get('change_request', (data, error) => {
     if (error) {
-      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
-    }
+	      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
+	    }
     console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
   });
   post('change_request', (data, error) => {
     if (error) {
-      console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
-    }
-    console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
-  });
-}
+     console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
+   }
+	    console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
+});
 
 // Call main to run it.
 main();
