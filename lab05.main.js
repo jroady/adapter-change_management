@@ -111,7 +111,7 @@ class ServiceNowAdapter extends EventEmitter {
 		 * the blocks for each branch.
 		 */
 	    if (error) {
-	       /**
+	      /**
 			 * Write this block. If an error was returned, we need to emit
 			 * OFFLINE. Log the returned error using IAP's global log object at
 			 * an error severity. In the log message, record this.id so an
@@ -121,21 +121,19 @@ class ServiceNowAdapter extends EventEmitter {
 			 * execute it passing the error seen as an argument for the
 			 * callback's errorMessage parameter.
 			 */
-		     log.info("\nRoady before emit");
-
-		     this.emitOffline();
-		     errorMessage = "this.id+': ServiceNow: Instance is unavailable.";
-		     log.info("\nError return from getRecord, error = "+`$(JSON.stringify(error)`+"\n");
+		        this.emitOffline();
+		        errorMessage = "this.id+': ServiceNow: Instance is unavailable.";
+		        log.info("\nError return from getRecord, error = "+`$(JSON.stringify(error)`+"\n");
 		} else {
 		     /**
-			  * Write this block. If no runtime problems were detected, emit ONLINE.
-			  * Log an appropriate message using IAP's global log object at a debug
-			  * severity. If an optional IAP callback function was passed to
-			  * healthcheck(), execute it passing this function's result parameter as
-			  * an argument for the callback function's responseData parameter.
-			  */
-		      this.emitOnline();
-		      log.info("\nNormal return from getRecord, result = "+`$(JSON.stringify(result)`+"\n");
+				 * Write this block. If no runtime problems were detected, emit ONLINE.
+				 * Log an appropriate message using IAP's global log object at a debug
+				 * severity. If an optional IAP callback function was passed to
+				 * healthcheck(), execute it passing this function's result parameter as
+				 * an argument for the callback function's responseData parameter.
+				 */
+		        this.emitOnline();
+		        log.info("\nNormal return from getRecord, result = "+`$(JSON.stringify(result)`+"\n");
 		}
 	    if (callback) return callback(result, errorMessage);
 	  });
@@ -179,22 +177,6 @@ class ServiceNowAdapter extends EventEmitter {
   }
 
   /**
-   * 
-   */
-  changeGETdata (e) {
-	  var c = [];
-	  const newKeys = ["number", "active", "priority", "description", "work_start", "work_end", "sys_id"];
-	  var   oldKeys = Object.keys(e);
-	  oldKeys.forEach(k => {
-		  if (newKeys.includes(k)) {
-			  if (k === "number")	c["change_ticket_number"] = e[k];
-			  else if (k==="sys_id") c["change_ticket_key"] = e[k];
-			  esle c[k] = e[k];
-		  }
-	  });
-	  return c;
-  }
-  /**
 	 * @memberof ServiceNowAdapter
 	 * @method getRecord
 	 * @summary Get ServiceNow Record
@@ -209,40 +191,10 @@ class ServiceNowAdapter extends EventEmitter {
 	 * this.connector's get() method. Note how the object was instantiated in
 	 * the constructor(). get() takes a callback function.
 	 */
-
-	var body	= null;
-	var pBody	= null;
-	var result	= null;
-	var count	= 0;
-	
-	log.info("\nDEBUG: "+this.id+": In getRecord, calling this.connector.get\n");
-    this.connector.get((responseData, errorMessage) => {
-    	if (typeof responseData === 'object') {
-    		if (responseData !== null) {
-    			 body = responseData.body;
-    			 if (body !== null) {
-    				 pBody = JSON.parse(body);
-    				 result = pBody.result;
-    				 if (result) {
-						count = result.length;
-						log.info("\nGET result is not null, number of entries = "+count+"\n");
-						if (count > 0) {
-							for (i=0; i<count; i++) {
-								var e = result[i];
-								var c = changeGETdata(e);
-								result[i] = c;
-							}
-							responseData.body = JSON.stringify(result);
-						} else
-							log.info("\nDid not find any elements in GET responseData\n");
-    				 } else
-    					 log.info("\nDid not find any elements in GET responseData\n");
-    			 }
-    		 }
-    	 }
-    	return callback(resposeData, errorMessage);
-     });
+	 log.info("\nDEBUG: "+this.id+": In getRecord, calling this.connector.get\n");
+     this.connector.get(callback);
   }
+
   /**
 	 * @memberof ServiceNowAdapter
 	 * @method postRecord
@@ -258,13 +210,9 @@ class ServiceNowAdapter extends EventEmitter {
 	 * this.connector's post() method. Note how the object was instantiated in
 	 * the constructor(). post() takes a callback function.
 	 */
-	 var body	= null;
-	 var pBody	= null;
-	 var result	= null;
-	 var count	= 0;
-
 	 log.info("\nDEBUG: "+this.id+": In postRecord\n");
-	 this.connector.post((responseData, errorMessage) => {
-    	if (typeof responseData === 'object') {
-    		if (responseData !== null) {
-    			 body = responseData.body;
+	 this.connector.post(callback);
+  }
+}
+
+module.exports = ServiceNowAdapter;
