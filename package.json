@@ -1,0 +1,23 @@
+{
+  "name": "@acme/adapter-change_management",
+  "version": "0.1.0",
+  "description": "An IAP change management adapter.",
+  "main": "main.js",
+  "dependencies": {
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jroady/adapter-change_management.git"
+  },
+  "author": "ACME",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/jroady/adapter-change_management/issues"
+  },
+  "homepage": "https://github.com/jroady/adapter-change_management#readme"
+}
