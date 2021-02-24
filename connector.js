@@ -33,7 +33,7 @@ const ServiceNowConnector = require(path.join(__dirname, './connector.js'));
 function iapCallback (data, error) {
 
     if (error) {
-      console.error(${JSON.stringify(error)}`);
+      console.error(`${JSON.stringify(error)}`);
     }
     console.log(`${JSON.stringify(data)}`);
 }
